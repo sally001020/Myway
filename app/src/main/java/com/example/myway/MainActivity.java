@@ -14,8 +14,19 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.google.api.gax.core.FixedCredentialsProvider;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.auth.oauth2.ServiceAccountCredentials;
+import com.google.cloud.dialogflow.v2.SessionName;
+import com.google.cloud.dialogflow.v2.SessionsClient;
+import com.google.cloud.dialogflow.v2.SessionsSettings;
+import com.google.common.collect.Lists;
+
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
+
+import java.io.InputStream;
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity implements MapView.CurrentLocationEventListener{
     RelativeLayout mapViewContainer;
@@ -23,13 +34,12 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
     private View hader;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initMaoView();
+//        initMaoView();
 
         Button button = (Button) findViewById(R.id.main_linemap);
         button.setOnClickListener(new View.OnClickListener() {
@@ -48,6 +58,16 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
                 startActivity(intent);
             }
         });
+
+        Button button3 = (Button) findViewById(R.id.main_find_load);
+        button3.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(getApplicationContext(), ChatbotActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         ImageView calendarImg = (ImageView) findViewById(R.id.main_calendar);
         calendarImg.setOnClickListener(new View.OnClickListener() {
@@ -77,28 +97,34 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
             }
         });
 
-    }
-    private void initMaoView() {
-        mapViewContainer = (RelativeLayout) findViewById(R.id.map_view);
-        mapView = new MapView(this);
-        mapViewContainer.addView(mapView);
-        mapView.setCurrentLocationEventListener(this);
-        mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
+
+
     }
 
-    @Override
-    protected void onResume() {
-        ConstraintLayout coord = (ConstraintLayout)findViewById(R.id.map_container);
-        super.onResume();
-        if (coord.getChildAt(0)==null){
-            try{
-                initMaoView();
 
-            }catch (RuntimeException re){
-                Log.e("MapActivity","onResume : "+String.valueOf(re));
-            }
-        }
-    }
+
+
+//    private void initMaoView() {
+//        mapViewContainer = (RelativeLayout) findViewById(R.id.map_view);
+//        mapView = new MapView(this);
+//        mapViewContainer.addView(mapView);
+//        mapView.setCurrentLocationEventListener(this);
+//        mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
+//    }
+
+//    @Override
+//    protected void onResume() {
+//        ConstraintLayout coord = (ConstraintLayout)findViewById(R.id.map_container);
+//        super.onResume();
+//        if (coord.getChildAt(0)==null){
+//            try{
+//                initMaoView();
+//
+//            }catch (RuntimeException re){
+//                Log.e("MapActivity","onResume : "+String.valueOf(re));
+//            }
+//        }
+//    }
 
 
 

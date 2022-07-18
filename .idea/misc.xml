@@ -43,6 +43,13 @@
         <entry key="..\:/Users/pahk1/AndroidStudioProjects/MyWay/app/src/main/res/menu/navigation_menu.xml" value="0.15087719298245614" />
         <entry key="..\:/Users/pahk1/AndroidStudioProjects/MyWay/app/src/main/res/mipmap-anydpi-v26/train_launcher.xml" value="0.11085526315789473" />
         <entry key="..\:/Users/pahk1/AndroidStudioProjects/MyWay/app/src/main/res/mipmap-anydpi-v26/train_launcher_round.xml" value="0.12072368421052632" />
+        <entry key="..\:/Users/sally/AndroidStudioProjects/Myway/app/src/main/res/drawable/bg_chat_receive.xml" value="0.1" />
+        <entry key="..\:/Users/sally/AndroidStudioProjects/Myway/app/src/main/res/drawable/bg_chat_send.xml" value="0.1" />
+        <entry key="..\:/Users/sally/AndroidStudioProjects/Myway/app/src/main/res/drawable/border_outline.xml" value="0.1" />
+        <entry key="..\:/Users/sally/AndroidStudioProjects/Myway/app/src/main/res/layout/activity_chatbot.xml" value="0.5" />
+        <entry key="..\:/Users/sally/AndroidStudioProjects/Myway/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Users/sally/AndroidStudioProjects/Myway/app/src/main/res/layout/adapter_message_one.xml" value="0.3619791666666667" />
+        <entry key="..\:/Users/sally/AndroidStudioProjects/Myway/app/src/main/res/layout/calendar_layout.xml" value="0.5" />
       </map>
     </option>
   </component>
