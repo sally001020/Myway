@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.fragment.PwdEditFragment">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/pwd_edit_text"
@@ -47,7 +46,7 @@
         android:background="@drawable/white_btn_bg"
         android:ems="10"
         android:hint="   기존 비밀번호를 입력하세요."
-        android:inputType="textPersonName"
+        android:inputType="textPassword"
         android:textAlignment="textStart"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,7 +61,7 @@
         android:background="@drawable/white_btn_bg"
         android:ems="10"
         android:hint="   신규 비밀번호를 입력하세요."
-        android:inputType="textPersonName"
+        android:inputType="textPassword"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -76,7 +75,7 @@
         android:background="@drawable/white_btn_bg"
         android:ems="10"
         android:hint="   신규 비밀번호를 다시 입력하세요."
-        android:inputType="textPersonName"
+        android:inputType="textPassword"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

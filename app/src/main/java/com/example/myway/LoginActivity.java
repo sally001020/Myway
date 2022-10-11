@@ -79,7 +79,6 @@ public class LoginActivity extends AppCompatActivity {
                 String userEmail = mEmail.getText().toString();
                 String userPassword = mPassword.getText().toString();
 
-
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -102,6 +101,11 @@ public class LoginActivity extends AppCompatActivity {
                                 editor.putString("userPassword",userPassword);
                                 editor.putString("userName",userName);
                                 editor.commit();
+
+                                SharedPreferences sharedPreferences03 = getSharedPreferences("sharedPreferences03", Activity.MODE_PRIVATE);
+                                SharedPreferences.Editor editor03 = sharedPreferences03.edit();
+                                editor03.putString("userName",userName);
+                                editor03.commit();
                                 Toast.makeText(getApplicationContext(), userName+"님 환영합니다", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);

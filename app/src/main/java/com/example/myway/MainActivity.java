@@ -169,8 +169,19 @@ public class MainActivity<mCredential> extends AppCompatActivity implements MapV
         userImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-                startActivity(intent);
+                SharedPreferences sharedPreferences = getSharedPreferences("sharedPreferences",MODE_PRIVATE);
+                String userEmail = sharedPreferences.getString("userEmail","None");
+                Log.d("MyPage Test",userEmail);
+
+                if (userEmail != "None") {
+                    Intent intent1 = new Intent(getApplicationContext(),MypageActivity.class);
+                    startActivity(intent1);
+                } else {
+                    Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                    startActivity(intent);
+                }
+
+
             }
         });
 
