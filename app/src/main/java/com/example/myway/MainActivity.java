@@ -1,10 +1,5 @@
 package com.example.myway;
 
-import static com.example.myway.CalendarActivity.REQUEST_ACCOUNT_PICKER;
-import static com.example.myway.CalendarActivity.REQUEST_AUTHORIZATION;
-import static com.example.myway.CalendarActivity.REQUEST_GOOGLE_PLAY_SERVICES;
-import static com.example.myway.CalendarActivity.REQUEST_PERMISSION_GET_ACCOUNTS;
-
 import android.Manifest;
 import android.accounts.AccountManager;
 import android.app.Activity;
@@ -81,19 +76,6 @@ public class MainActivity<mCredential> extends AppCompatActivity implements MapV
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION};
     private static final String LOG_TAG = "MainActivity";
-
-    //
-    private static final String PREF_ACCOUNT_NAME = "accountName";
-    private static final String[] SCOPES = {CalendarScopes.CALENDAR};
-
-    // Google Calendar API에 접근하기 위해 사용되는 구글 캘린더 API 서비스 객체
-    private com.google.api.services.calendar.Calendar mService = null;
-
-    // Google Calendar API 호출 관련 메커니즘 및 AsyncTask을 재사용하기 위해 사용
-    private int mID = 0;
-
-    GoogleAccountCredential mCredential;
-    ProgressDialog mProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
