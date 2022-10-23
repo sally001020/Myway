@@ -36,8 +36,8 @@ public class CalendarActivity extends AppCompatActivity {
 
         meditText_detail = (EditText) findViewById(R.id.textview_main_calendar_detail);
         meditText_title = (EditText) findViewById(R.id.textview_main_calendar_title);
-        meditText_place = (EditText) findViewById(R.id.textview_main_calendar_place);
-        meditText_time = (EditText) findViewById(R.id.textview_main_calendar_time);
+//        meditText_place = (EditText) findViewById(R.id.textview_main_calendar_place);
+//        meditText_time = (EditText) findViewById(R.id.textview_main_calendar_time);
         alarmBtn = findViewById(R.id.alarm_btn);
         diaryTextView = findViewById(R.id.diaryTextView);
 
@@ -47,31 +47,31 @@ public class CalendarActivity extends AppCompatActivity {
         final String date = intent.getExtras().getString("selectedDate");
         diaryTextView.setText(date);
 
-        final EditText meditText_time = (EditText) findViewById(R.id.textview_main_calendar_time);
-        meditText_time.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Calendar mcurrentTime = Calendar.getInstance();
-                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY)+9;
-                int minute = mcurrentTime.get(Calendar.MINUTE);
-                TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(CalendarActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selecteMinute) {
-                        String state = "AM";
-
-                        if (selectedHour > 12) {
-                            selectedHour -= 12;
-                            state = "PM";
-                        }
-                        meditText_time.setText(state+" " +selectedHour+"시"+selecteMinute+"분");
-                        meditText_time.setText(selectedHour+"시"+selecteMinute+"분");
-                    }
-                }, hour, minute, false);
-                mTimePicker.setTitle("Select Time");
-                mTimePicker.show();
-            }
-        });
+//        final EditText meditText_time = (EditText) findViewById(R.id.textview_main_calendar_time);
+//        meditText_time.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Calendar mcurrentTime = Calendar.getInstance();
+//                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY)+9;
+//                int minute = mcurrentTime.get(Calendar.MINUTE);
+//                TimePickerDialog mTimePicker;
+//                mTimePicker = new TimePickerDialog(CalendarActivity.this, new TimePickerDialog.OnTimeSetListener() {
+//                    @Override
+//                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selecteMinute) {
+//                        String state = "AM";
+//
+//                        if (selectedHour > 12) {
+//                            selectedHour -= 12;
+//                            state = "PM";
+//                        }
+//                        meditText_time.setText(state+" " +selectedHour+"시"+selecteMinute+"분");
+//                        meditText_time.setText(selectedHour+"시"+selecteMinute+"분");
+//                    }
+//                }, hour, minute, false);
+//                mTimePicker.setTitle("Select Time");
+//                mTimePicker.show();
+//            }
+//        });
 
         mNotificationhelper = new NotificationHelper(this);
 

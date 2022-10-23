@@ -1,16 +1,22 @@
 package com.example.myway;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -22,8 +28,9 @@ public class CalendarMainActivity extends AppCompatActivity {
     public String fname=null;
     public String str=null;
     public Button cha_Btn,del_Btn,save_Btn;
-    public TextView diaryTextView,textView2;
+    public TextView diaryTextView,textView;
     public EditText contextEditText;
+    public ImageView right_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +43,9 @@ public class CalendarMainActivity extends AppCompatActivity {
         save_Btn=findViewById(R.id.save_Btn);
         del_Btn=findViewById(R.id.del_Btn);
         cha_Btn=findViewById(R.id.cha_Btn);
-        textView2=findViewById(R.id.textView2);
+        textView=findViewById(R.id.textView);
         contextEditText=findViewById(R.id.contextEditText);
+        right_back=findViewById(R.id.right_back);
 
         // 표시 날짜 클릭시 화면 전환
         diaryTextView.setOnClickListener(new View.OnClickListener() {
@@ -60,7 +68,7 @@ public class CalendarMainActivity extends AppCompatActivity {
 
                 save_Btn.setVisibility(View.VISIBLE);
                 contextEditText.setVisibility(View.VISIBLE);
-                textView2.setVisibility(View.INVISIBLE);
+                textView.setVisibility(View.INVISIBLE);
                 cha_Btn.setVisibility(View.INVISIBLE);
                 del_Btn.setVisibility(View.INVISIBLE);
                 contextEditText.setText("");
@@ -75,14 +83,37 @@ public class CalendarMainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 saveDiary(fname);
                 str=contextEditText.getText().toString();
-                textView2.setText(str);
+                textView.setText(str);
                 save_Btn.setVisibility(View.INVISIBLE);
                 cha_Btn.setVisibility(View.VISIBLE);
                 del_Btn.setVisibility(View.VISIBLE);
                 contextEditText.setVisibility(View.INVISIBLE);
-                textView2.setVisibility(View.VISIBLE);
+                textView.setVisibility(View.VISIBLE);
             }
         });
+
+        textView.setMovementMethod(new ScrollingMovementMethod());
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+        right_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        AlertDialog.Builder myAlertBuilder =
+                new AlertDialog.Builder(CalendarMainActivity.this);
+        myAlertBuilder.setTitle("알림");
+        myAlertBuilder.setMessage("날짜를 클릭하여 일정을 등록하세요!");
+        // 버튼 추가 (Ok 버튼)
+        myAlertBuilder.setPositiveButton("Ok",new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog,int which){}
+        });
+        // Alert를 생성해주고 보여주는 메소드(show를 선언해야 Alert가 생성)
+        myAlertBuilder.show();
     }
 
     public void  checkDay(int cYear,int cMonth,int cDay){
@@ -99,8 +130,8 @@ public class CalendarMainActivity extends AppCompatActivity {
             str=new String(fileData);
 
             contextEditText.setVisibility(View.INVISIBLE);
-            textView2.setVisibility(View.VISIBLE);
-            textView2.setText(str);
+            textView.setVisibility(View.VISIBLE);
+            textView.setText(str);
 
             save_Btn.setVisibility(View.INVISIBLE);
             cha_Btn.setVisibility(View.VISIBLE);
@@ -110,20 +141,20 @@ public class CalendarMainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     contextEditText.setVisibility(View.VISIBLE);
-                    textView2.setVisibility(View.INVISIBLE);
+                    textView.setVisibility(View.INVISIBLE);
                     contextEditText.setText(str);
 
                     save_Btn.setVisibility(View.VISIBLE);
                     cha_Btn.setVisibility(View.INVISIBLE);
                     del_Btn.setVisibility(View.INVISIBLE);
-                    textView2.setText(contextEditText.getText());
+                    textView.setText(contextEditText.getText());
                 }
 
             });
             del_Btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    textView2.setVisibility(View.INVISIBLE);
+                    textView.setVisibility(View.INVISIBLE);
                     contextEditText.setText("");
                     contextEditText.setVisibility(View.VISIBLE);
                     save_Btn.setVisibility(View.VISIBLE);
@@ -132,8 +163,8 @@ public class CalendarMainActivity extends AppCompatActivity {
                     removeDiary(fname);
                 }
             });
-            if(textView2.getText()==null){
-                textView2.setVisibility(View.INVISIBLE);
+            if(textView.getText()==null){
+                textView.setVisibility(View.INVISIBLE);
                 diaryTextView.setVisibility(View.VISIBLE);
                 save_Btn.setVisibility(View.VISIBLE);
                 cha_Btn.setVisibility(View.INVISIBLE);
