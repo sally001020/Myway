@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         mGoogleSignClient = GoogleSignIn.getClient(this,gso);
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         if (acct!=null){
-            naviationToSecondActivity();
+            //naviationToSecondActivity();
         }
 
         String NameData = getIntent().getStringExtra("userName");
@@ -179,10 +179,10 @@ public class LoginActivity extends AppCompatActivity {
 
         }
     }
-    void naviationToSecondActivity() {
-        Intent intent = new Intent(LoginActivity.this,GoogleLoginActvity.class);
-        startActivity(intent);
-    }
+//    void naviationToSecondActivity() {
+//        Intent intent = new Intent(LoginActivity.this,GoogleLoginActvity.class);
+//        startActivity(intent);
+//    }
 
     void naviagtionMainActivity() {
         Intent intent = new Intent(LoginActivity.this,MainActivity.class);

@@ -19,6 +19,13 @@
         android:theme="@style/Theme.MyWay.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ManageActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".TrainApiActivity"
             android:exported="true" />
         <activity

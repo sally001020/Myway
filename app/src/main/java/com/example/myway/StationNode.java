@@ -9,8 +9,6 @@ public class StationNode {
     private int vertex;
     private StationNode prev;
 
-
-
     public StationNode(String n, String s, String l, int c){
         number= n;
         stationname=s;
@@ -33,7 +31,6 @@ public class StationNode {
     public StationNode getPrev(){
         return prev;
     }
-
     public String getNumber(){
         return number;
     }
