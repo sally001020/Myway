@@ -97,6 +97,8 @@ dependencies {
     implementation( 'com.google.apis:google-api-services-calendar:v3-rev235-1.22.0') {
         exclude group:'com.google.guava'
     }
+
+    implementation 'kr.co.prnd:readmore-textview:1.0.0'
 //    implementation 'com.android.support:multidex:2.0.1'
 //    implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
 }

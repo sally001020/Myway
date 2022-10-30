@@ -79,7 +79,7 @@ public class NoticeActivity extends AppCompatActivity {
                             String write_date = jsonobject.get("write_date").toString();
                             Log.i("Notice Title 길이",board_num +" " + title+" " + writer + " " + field + " " + write_date);
 
-                            Data data = new Data(title,write_date);
+                            Data data = new Data(title,write_date,field);
                             Log.i("Data notice 확인",data.getDate().toString());
                             mArrayList.add(data);
                             mAdapter.notifyItemInserted(mArrayList.size() -1);
@@ -89,7 +89,13 @@ public class NoticeActivity extends AppCompatActivity {
                                 public void onItemClick(View v, int position) {
                                     String title = mArrayList.get(position).getTitle();
                                     String write_date = mArrayList.get(position).getDate();
+                                    String field = mArrayList.get(position).getField();
                                     Toast.makeText(mContext, "title : " +title + "\ndate : " + write_date, Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(NoticeActivity.this,ItemPlusActivity.class);
+                                    intent.putExtra("Title",title);
+                                    intent.putExtra("Write",write_date);
+                                    intent.putExtra("Field",field);
+                                    startActivity(intent);
 
                                 }
                             });

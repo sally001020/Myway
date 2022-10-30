@@ -209,8 +209,6 @@ public class ChatbotActivity extends AppCompatActivity implements BotReply {
         if (id == R.id.menu_cancel) {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
-//            finish();
-//            return true;
         }
         return super.onOptionsItemSelected(item);
     }
