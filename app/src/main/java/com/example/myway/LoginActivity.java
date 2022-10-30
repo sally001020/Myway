@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         mGoogleSignClient = GoogleSignIn.getClient(this,gso);
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         if (acct!=null){
-            //naviationToSecondActivity();
+            naviationToSecondActivity();
         }
 
         String NameData = getIntent().getStringExtra("userName");
@@ -170,6 +170,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            Toast.makeText(getApplicationContext(), "Google sign in Ok", Toast.LENGTH_LONG).show();
             try {
                 task.getResult(ApiException.class);
                 naviagtionMainActivity();
@@ -179,10 +180,10 @@ public class LoginActivity extends AppCompatActivity {
 
         }
     }
-//    void naviationToSecondActivity() {
-//        Intent intent = new Intent(LoginActivity.this,GoogleLoginActvity.class);
-//        startActivity(intent);
-//    }
+    void naviationToSecondActivity() {
+        Intent intent = new Intent(LoginActivity.this,GoogleLoginActvity.class);
+        startActivity(intent);
+    }
 
     void naviagtionMainActivity() {
         Intent intent = new Intent(LoginActivity.this,MainActivity.class);
