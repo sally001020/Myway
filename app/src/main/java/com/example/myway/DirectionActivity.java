@@ -57,8 +57,8 @@ public class DirectionActivity extends AppCompatActivity {
 
 
         TextView tText =(TextView) findViewById(R.id.timeView2);
-        //출퇴근시간 6-8/17-19시 사이면->혼잡 이외면 여유 반환.. 추후 세분화 예정
-        if (((Timeset4>=6)&&(Timeset4<=8))||((Timeset4>=17)&&(Timeset4<=19))) {
+        //출퇴근시간 6-8/17-19시 사이면->혼잡 이외면 여유 반환
+        if (((Timeset4>=6)&&(Timeset4<=8))||((Timeset4>=15)&&(Timeset4<=19))) {
             tText.setText("혼잡");
             isJam = "True";
             tText.setTextColor(Color.parseColor("#8e0000"));
@@ -224,13 +224,15 @@ public class DirectionActivity extends AppCompatActivity {
 
                 System.out.println(Arrays.toString(stData));
 
+                TextView stTest = (TextView) findViewById(R.id.stations_view);
 
+                stTest.setText(Arrays.toString(stData).replaceAll(",","\n"));
 
 
 
             }else if(isJam == "False"){ //여유일시
                 Log.d("혼잡아님", "혼잡아님");
-                InputStream is = getResources().openRawResource(R.raw.data);
+                InputStream is = getResources().openRawResource(R.raw.congest);
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(is));
                 String s;
