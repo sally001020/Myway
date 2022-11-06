@@ -114,7 +114,7 @@ public class TrainInfoActivity extends AppCompatActivity {
         }
 
 //        StringBuilder urlBuilder = new StringBuilder("http://swopenAPI.seoul.go.kr/api/subway/");
-        String queryUrl = "http://swopenapi.seoul.go.kr/api/subway/6259474d5573616c3131335862467179/xml/realtimeStationArrival/1/2/" + location;
+        String queryUrl = "http://swopenapi.seoul.go.kr/api/subway/6259474d5573616c3131335862467179/xml/realtimeStationArrival/1/5/" + location;
 
         try {
             URL url = new URL(queryUrl);
@@ -138,8 +138,54 @@ public class TrainInfoActivity extends AppCompatActivity {
                     case XmlPullParser.START_TAG:
                         tag = xpp.getName();
 
-                        if (tag.equals("row")) ;
-                        else if (tag.equals("updnLine")) {
+                        if (tag.equals("row"));
+                        else if(tag.equals("subwayId")){
+                            buffer.append("열차 호선: ");
+                            xpp.next();
+                            if((xpp.getText()).equals("1001")){
+                                buffer.append("1호선");
+                                buffer.append("\n");
+                            }else if((xpp.getText()).equals("1002")){
+                                buffer.append("2호선");
+                                buffer.append("\n");
+                            }else if((xpp.getText()).equals("1003")){
+                                buffer.append("3호선");
+                                buffer.append("\n");
+                            }else if((xpp.getText()).equals("1004")){
+                                buffer.append("4호선");
+                                buffer.append("\n");
+                            }else if((xpp.getText()).equals("1005")){
+                                buffer.append("5호선");
+                                buffer.append("\n");
+                            }else if((xpp.getText()).equals("1006")){
+                                buffer.append("6호선");
+                                buffer.append("\n");
+                            }else if((xpp.getText()).equals("1007")){
+                                buffer.append("7호선");
+                                buffer.append("\n");
+                            }else if((xpp.getText()).equals("1008")){
+                                buffer.append("8호선");
+                                buffer.append("\n");
+                            }else if((xpp.getText()).equals("1009")){
+                                buffer.append("9호선");
+                                buffer.append("\n");
+                            }else if((xpp.getText()).equals("1065")){
+                                buffer.append("공항철도");
+                                buffer.append("\n");
+                            }else if((xpp.getText()).equals("1063")){
+                                buffer.append("경의중앙선");
+                                buffer.append("\n");
+                            }else if((xpp.getText()).equals("1067")){
+                                buffer.append("경춘선");
+                                buffer.append("\n");
+                            }else if((xpp.getText()).equals("1077")){
+                                buffer.append("신분당선");
+                                buffer.append("\n");
+                            }else if((xpp.getText()).equals("1075")){
+                                buffer.append("수인분당선");
+                                buffer.append("\n");
+                            }
+                        }else if (tag.equals("updnLine")) {
                             buffer.append("상행 하행 여부: ");
                             xpp.next();
                             buffer.append(xpp.getText());
@@ -152,6 +198,11 @@ public class TrainInfoActivity extends AppCompatActivity {
                         } else if (tag.equals("statnNm")) {
                             xpp.next();
                             stationNameView.setText(xpp.getText());
+                        }else if (tag.equals("arvlMsg2")) {
+                            buffer.append("열차 위치: ");
+                            xpp.next();
+                            buffer.append(xpp.getText());
+                            buffer.append("\n");
                         }
                         break;
 
@@ -170,7 +221,7 @@ public class TrainInfoActivity extends AppCompatActivity {
         } catch (Exception e) {
 
         }
-        buffer.append("파싱 끝");
+//        buffer.append("파싱 끝");
         return buffer.toString();
     }
 
