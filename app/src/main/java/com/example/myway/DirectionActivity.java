@@ -58,7 +58,7 @@ public class DirectionActivity extends AppCompatActivity {
 
         TextView tText =(TextView) findViewById(R.id.timeView2);
         //출퇴근시간 6-8/17-19시 사이면->혼잡 이외면 여유 반환
-        if (((Timeset4>=6)&&(Timeset4<=8))||((Timeset4>=15)&&(Timeset4<=19))) {
+        if (((Timeset4>=6)&&(Timeset4<=8))||((Timeset4>=17)&&(Timeset4<=19))) {
             tText.setText("혼잡");
             isJam = "True";
             tText.setTextColor(Color.parseColor("#8e0000"));
@@ -117,8 +117,6 @@ public class DirectionActivity extends AppCompatActivity {
 
         ////////////////////지하철 맵 생성
         HashMap<String, HashSet<String>> transferMap= new HashMap<String, HashSet<String>>();
-
-        String fileName = "mywaydata.txt";
 
         //출발역, 도착역 지정 - toString() 하지 않을시 오류 발생
         String depart = Depart_station.toString();
@@ -232,7 +230,7 @@ public class DirectionActivity extends AppCompatActivity {
 
             }else if(isJam == "False"){ //여유일시
                 Log.d("혼잡아님", "혼잡아님");
-                InputStream is = getResources().openRawResource(R.raw.congest);
+                InputStream is = getResources().openRawResource(R.raw.data);
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(is));
                 String s;
