@@ -1,5 +1,8 @@
 package com.example.myway;
 
+import android.app.AlarmManager;
+import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,16 +12,21 @@ import android.content.Intent;
 
 import androidx.core.app.NotificationCompat;
 
+import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class CalendarActivity extends AppCompatActivity {
-
     private EditText meditText_detail;
     private EditText meditText_title;
     private EditText meditText_place;
@@ -89,5 +97,4 @@ public class CalendarActivity extends AppCompatActivity {
         NotificationCompat.Builder nb = mNotificationhelper.getChannel1Notification(title, message);
         mNotificationhelper.getManager().notify(0, nb.build());
     }
-
 }
