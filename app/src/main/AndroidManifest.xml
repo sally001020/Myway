@@ -151,6 +151,17 @@
             android:name=".ItemPlusActivity"
             android:exported="true">
         </activity>
+
+        <activity android:name=".AlarmActivity" />
+
+        <receiver
+            android:name=".AlarmReceiver"
+            android:enabled="true"
+            android:exported="false" />
+
+        <service
+            android:name=".AlarmService"
+            android:enabled="true" />
     </application>
 
 </manifest>
