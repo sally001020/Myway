@@ -122,12 +122,12 @@
 
     <ImageView
         android:id="@+id/main_mapBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_marginTop="80dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toStartOf="@+id/main_calendar"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_circle_plus_solid2" />
+        app:srcCompat="@drawable/ic_baseline_map_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
