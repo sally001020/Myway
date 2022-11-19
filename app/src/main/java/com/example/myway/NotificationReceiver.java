@@ -56,27 +56,18 @@ public class NotificationReceiver extends BroadcastReceiver {
         // FLAG_UPDATE_CURRENT ->
         // 설명된 PendingIntent가 이미 존재하는 경우 유지하되, 추가 데이터를 이 새 Intent에 있는 것으로 대체함을 나타내는 플래그입니다.
         // getActivity, getBroadcast 및 getService와 함께 사용
-//        PendingIntent pendingIntent = PendingIntent.getActivity(context,101,intent2,
-//                PendingIntent.FLAG_UPDATE_CURRENT);
         PendingIntent pendingIntent = PendingIntent.getActivity(context,101,intent2,
                 PendingIntent.FLAG_IMMUTABLE);
 
-//        Intent notificationIntent = new Intent(context, ChatbotActivity.class);
-//        PendingIntent notificationPendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE);
-
         //알림창 제목
         builder.setContentTitle(titleValue); //회의명노출
-        //builder.setContentText(intent.getStringExtra("content")); //회의 내용
         //알림창 아이콘
         builder.setSmallIcon(R.drawable.mywaylogo);
         //알림창 터치시 자동 삭제
         builder.setAutoCancel(true);
 
         builder.setContentIntent(pendingIntent);
-
         builder.setContentText(detailValue);
-
-//        builder.setContentIntent(intent2);
 
         //푸시알림 빌드
         Notification notification = builder.build();

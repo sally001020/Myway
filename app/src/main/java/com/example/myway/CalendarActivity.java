@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -35,6 +36,7 @@ public class CalendarActivity extends AppCompatActivity {
     private TextView txt_startTime; //알람시간
     private ImageButton imgBtn_changeTime; //알람변경 버튼
     private EditText edit_title,edit_detail;
+    private ImageView right_back;
 
     //현재 시간,분 변수선언
     int currHour, currMinute;
@@ -55,6 +57,7 @@ public class CalendarActivity extends AppCompatActivity {
         imgBtn_changeTime =(ImageButton) findViewById(R.id.imgBtn_changeTime);
         edit_title = (EditText) findViewById(R.id.edit_title);
         edit_detail = (EditText) findViewById(R.id.edit_detail);
+        right_back = (ImageView) findViewById(R.id.right_back);
 
         //현재 시간기준으로 몇시 몇분인지 구하기
         LocalTime now = LocalTime.now();
@@ -77,6 +80,14 @@ public class CalendarActivity extends AppCompatActivity {
         });
         // Alert를 생성해주고 보여주는 메소드(show를 선언해야 Alert가 생성)
         myAlertBuilder.show();
+
+        right_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), CalendarMainActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -87,7 +98,6 @@ public class CalendarActivity extends AppCompatActivity {
         imgBtn_changeTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 //스피너모드 타임피커
                 TimePickerDialog dialog = new TimePickerDialog(
                         CalendarActivity.this,
@@ -96,8 +106,6 @@ public class CalendarActivity extends AppCompatActivity {
 
                 //다이알로그 타이틀 설정
                 dialog.setTitle("알람 시간 설정");
-
-                //알람 설정후 변경된 시간변경 및 토스트 팝업 발생
 
                 //기존테마의 배경을 없앤다
                 dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
@@ -120,6 +128,9 @@ public class CalendarActivity extends AppCompatActivity {
 
                 //알람 등록 처리
                 setNotice(hourOfDay + ":" + minute + ":" + "00");
+
+                Intent intents = new Intent(getApplicationContext(), CalendarMainActivity.class);
+                startActivity(intents);
             }
         };
     }

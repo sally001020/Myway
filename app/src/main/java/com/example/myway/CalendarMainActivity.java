@@ -1,6 +1,5 @@
 package com.example.myway;
 
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,19 +16,16 @@ import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
 public class CalendarMainActivity extends AppCompatActivity {
-
     final CharSequence[] date = {null};
-
     public String fname=null;
     public String str=null;
     public Button cha_Btn,del_Btn,save_Btn;
-    public TextView diaryTextView,textView;
+    public TextView diaryTextView,textView,textView_alarm;
     public EditText contextEditText;
     public ImageView right_back;
 
@@ -40,16 +36,16 @@ public class CalendarMainActivity extends AppCompatActivity {
 
         CalendarView calendarView = (CalendarView) findViewById(R.id.calendarView);
         TextView diaryTextView = (TextView) findViewById(R.id.diaryTextView);
-
         save_Btn=findViewById(R.id.save_Btn);
         del_Btn=findViewById(R.id.del_Btn);
         cha_Btn=findViewById(R.id.cha_Btn);
         textView=findViewById(R.id.textView);
         contextEditText=findViewById(R.id.contextEditText);
         right_back=findViewById(R.id.right_back);
+        textView_alarm = findViewById(R.id.textview_alarm);
 
-        // 표시 날짜 클릭시 화면 전환
-        diaryTextView.setOnClickListener(new View.OnClickListener() {
+        // 알람 클릭
+        textView_alarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), CalendarActivity.class);
@@ -60,7 +56,7 @@ public class CalendarMainActivity extends AppCompatActivity {
             }
         });
 
-        // 클릭한 날짜 표시
+        // 날짜 표시
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
@@ -107,8 +103,8 @@ public class CalendarMainActivity extends AppCompatActivity {
 
         AlertDialog.Builder myAlertBuilder =
                 new AlertDialog.Builder(CalendarMainActivity.this);
-        myAlertBuilder.setTitle("알림");
-        myAlertBuilder.setMessage("날짜를 클릭하여 일정을 등록하세요!");
+        myAlertBuilder.setTitle("사용법 알림");
+        myAlertBuilder.setMessage("* 일정 등록 : 달력의 날짜 클릭! \n* 알림 설정 : 상단의 알람 이모티콘 클릭!");
         // 버튼 추가 (Ok 버튼)
         myAlertBuilder.setPositiveButton("Ok",new DialogInterface.OnClickListener(){
             public void onClick(DialogInterface dialog,int which){}
