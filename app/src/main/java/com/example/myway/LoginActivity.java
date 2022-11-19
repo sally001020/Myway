@@ -146,16 +146,16 @@ public class LoginActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
 
         final DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        findViewById(R.id.bars).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
-        NavigationView navigationView = findViewById(R.id.navigationView);
-        navigationView.setItemIconTintList(null);
-
-        NavigationViewHelper.enableNavigation(mContext,navigationView);
+//        findViewById(R.id.bars).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                drawerLayout.openDrawer(GravityCompat.START);
+//            }
+//        });
+//        NavigationView navigationView = findViewById(R.id.navigationView);
+//        navigationView.setItemIconTintList(null);
+//
+//        NavigationViewHelper.enableNavigation(mContext,navigationView);
 
     }
     void signIn() {
