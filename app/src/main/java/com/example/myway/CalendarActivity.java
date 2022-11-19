@@ -1,181 +1,175 @@
 package com.example.myway;
 
-import android.app.AlarmManager;
-import android.app.DatePickerDialog;
-import android.app.PendingIntent;
-import android.os.Bundle;
-
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-
-import androidx.core.app.NotificationCompat;
-
-import android.os.StrictMode;
+import android.os.Build;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class CalendarActivity extends AppCompatActivity {
-//    private EditText meditText_detail;
-//    private EditText meditText_title;
-//    private EditText meditText_place;
-//    private EditText meditText_time;
-//
-//    private Button alarmBtn;
-//    private NotificationHelper mNotificationhelper;
-//    private String alarm_title;
-//    private TextView diaryTextView;
 
-    // 알람 시간
-    private Calendar calendar;
-    private TimePicker timePicker;
+    private String TAG = this.getClass().getSimpleName();
+    private TextView txt_startTime; //알람시간
+    private ImageButton imgBtn_changeTime; //알람변경 버튼
+    private EditText edit_title,edit_detail;
 
+    //현재 시간,분 변수선언
+    int currHour, currMinute;
+
+    //시스템에서 알람 서비스를 제공하도록 도와주는 클래스
+    //특정 시점에 알람이 울리도록 도와준다
+    private AlarmManager alarmManager;
+
+    private TimePickerDialog.OnTimeSetListener timeCallbackMethod; //알람시간 변경선택 타임피커 콜백처리 변수 선언
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calendar_layout);
 
-//        meditText_detail = (EditText) findViewById(R.id.textview_main_calendar_detail);
-//        meditText_title = (EditText) findViewById(R.id.textview_main_calendar_title);
-//        meditText_place = (EditText) findViewById(R.id.textview_main_calendar_place);
-//        meditText_time = (EditText) findViewById(R.id.textview_main_calendar_time);
-//        alarmBtn = findViewById(R.id.alarm_btn);
-//        diaryTextView = findViewById(R.id.diaryTextView);
+        txt_startTime = (TextView) findViewById(R.id.txt_startTime);
+        imgBtn_changeTime =(ImageButton) findViewById(R.id.imgBtn_changeTime);
+        edit_title = (EditText) findViewById(R.id.edit_title);
+        edit_detail = (EditText) findViewById(R.id.edit_detail);
 
-//        alarm_title = meditText_title.getText().toString();
+        //현재 시간기준으로 몇시 몇분인지 구하기
+        LocalTime now = LocalTime.now();
+        currHour = now.getHour();
+        currMinute = now.getMinute();
 
-//        Intent intent = getIntent();
-//        final String date = intent.getExtras().getString("selectedDate");
-//        diaryTextView.setText(date);
+        //푸시알림을 보내기 위해, 시스템에서 알림 서비스를 생성해주는 코드
+        alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
 
-        this.calendar = Calendar.getInstance();
-        displayDate(); // 현재 날짜 표시
+        //tiem picker dialog 리스너 등록
+        this.timeInitializeListener();
 
-        this.timePicker = findViewById(R.id.timePicker);
-
-        findViewById(R.id.btnCalendar).setOnClickListener(mClickListener);
-        findViewById(R.id.btnAlarm).setOnClickListener(mClickListener);
-
-//        final EditText meditText_time = (EditText) findViewById(R.id.textview_main_calendar_time);
-//        meditText_time.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Calendar mcurrentTime = Calendar.getInstance();
-//                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY)+9;
-//                int minute = mcurrentTime.get(Calendar.MINUTE);
-//                TimePickerDialog mTimePicker;
-//                mTimePicker = new TimePickerDialog(CalendarActivity.this, new TimePickerDialog.OnTimeSetListener() {
-//                    @Override
-//                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selecteMinute) {
-//                        String state = "AM";
-//
-//                        if (selectedHour > 12) {
-//                            selectedHour -= 12;
-//                            state = "PM";
-//                        }
-//                        meditText_time.setText(state+" " +selectedHour+"시"+selecteMinute+"분");
-//                        meditText_time.setText(selectedHour+"시"+selecteMinute+"분");
-//                    }
-//                }, hour, minute, false);
-//                mTimePicker.setTitle("Select Time");
-//                mTimePicker.show();
-//            }
-//        });
-
-//        mNotificationhelper = new NotificationHelper(this);
-//
-//        alarmBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String title = meditText_title.getText().toString();
-//                String message = meditText_detail.getText().toString();
-//                sendOnChannel1(title, message);
-//            }
-//        });
+        AlertDialog.Builder myAlertBuilder =
+                new AlertDialog.Builder(CalendarActivity.this);
+        myAlertBuilder.setTitle("사용법 알림");
+        myAlertBuilder.setMessage("1. 일정 제목, 세부사항을 입력하고 \n2. '+'를 클릭하여 시간 설정을 하세요!");
+        // 버튼 추가 (Ok 버튼)
+        myAlertBuilder.setPositiveButton("Ok",new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog,int which){}
+        });
+        // Alert를 생성해주고 보여주는 메소드(show를 선언해야 Alert가 생성)
+        myAlertBuilder.show();
     }
 
-    /* 날짜 표시 */
-    private void displayDate() {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        ((TextView) findViewById(R.id.txtDate)).setText(format.format(this.calendar.getTime()));
-    }
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-    /* DatePickerDialog 호출 */
-    private void showDatePicker() {
-        DatePickerDialog dialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+        //알람시간 변경 선택
+        imgBtn_changeTime.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                // 알람 날짜 설정
-                calendar.set(Calendar.YEAR, year);
-                calendar.set(Calendar.MONTH, month);
-                calendar.set(Calendar.DATE, dayOfMonth);
+            public void onClick(View v) {
 
-                // 날짜 표시
-                displayDate();
+                //스피너모드 타임피커
+                TimePickerDialog dialog = new TimePickerDialog(
+                        CalendarActivity.this,
+                        android.R.style.Theme_Holo_Light_Dialog_NoActionBar,
+                        timeCallbackMethod, currHour, currMinute, false);
+
+                //다이알로그 타이틀 설정
+                dialog.setTitle("알람 시간 설정");
+
+                //알람 설정후 변경된 시간변경 및 토스트 팝업 발생
+
+                //기존테마의 배경을 없앤다
+                dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                dialog.show();
             }
-        }, this.calendar.get(Calendar.YEAR), this.calendar.get(Calendar.MONTH), this.calendar.get(Calendar.DAY_OF_MONTH));
-
-        dialog.show();
+        });
     }
 
-    /* 알람 등록 */
-    private void setAlarm() {
-        // 알람 시간 설정
-        this.calendar.set(Calendar.HOUR_OF_DAY, this.timePicker.getHour());
-        this.calendar.set(Calendar.MINUTE, this.timePicker.getMinute());
-        this.calendar.set(Calendar.SECOND, 0);
+    //timePickerDialog에서 선택한 시간정보를 처리하는 이벤트
+    public void timeInitializeListener() {
+        timeCallbackMethod = new TimePickerDialog.OnTimeSetListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                Log.e(TAG, "onTimeSet: 시간 " + hourOfDay + ", 분 " + minute );
+                Toast.makeText(getApplicationContext(), "알림이 설정되었습니다.", Toast.LENGTH_LONG).show();
 
-        if (this.calendar.before(Calendar.getInstance())) {
-            Toast.makeText(this, "알람시간이 현재시간보다 이전일 수 없습니다.", Toast.LENGTH_LONG).show();
-            return;
-        }
+                //변경된 시간으로 textview 업데이트
+                txt_startTime.setText(formatTime(hourOfDay+":"+minute));
 
-        // Receiver 설정
-        Intent intent = new Intent(this, AlarmReceiver.class);
-//        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-
-        // 알람 설정
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, this.calendar.getTimeInMillis(), pendingIntent);
-
-        // Toast 보여주기 (알람 시간 표시)
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        Toast.makeText(this, "Alarm : " + format.format(calendar.getTime()), Toast.LENGTH_LONG).show();
-        Log.d("TAG", "Alarm : " + format.format(calendar.getTime()));
+                //알람 등록 처리
+                setNotice(hourOfDay + ":" + minute + ":" + "00");
+            }
+        };
     }
 
-    View.OnClickListener mClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.btnCalendar:
-                    // 달력
-                    showDatePicker();
+    //날짜 포맷 변환
+    // HH:mm => 오전/오후 hh:mm
+    public static String formatTime(String timeValue) {
+        DateFormat reqDateFormat = new SimpleDateFormat("HH:mm");
+        DateFormat resDateFormat = new SimpleDateFormat("a hh:mm", Locale.KOREAN);
+        Date datetime = null;
 
-                    break;
-                case R.id.btnAlarm:
-                    // 알람 등록
-                    setAlarm();
-
-                    break;
-            }
+        try {
+            //문자열을 파싱해서 Date객체를 만들어준다
+            datetime = reqDateFormat.parse(timeValue);
+        } catch (ParseException e) {
+            //패턴과다른 문자열이 입력되면 parse exception이 발생된다
+            e.printStackTrace();
         }
-    };
-//
-//    public void sendOnChannel1(String title, String message) {
-//        NotificationCompat.Builder nb = mNotificationhelper.getChannel1Notification(title, message);
-//        mNotificationhelper.getManager().notify(0, nb.build());
-//    }
+        return resDateFormat.format(datetime);
+    }
+
+    //알람매니저에 알람등록 처리
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void setNotice(String alarmTimeValue) {
+        //알람을 수신할 수 있도록 하는 리시버로 인텐트 요청
+        Intent receiverIntent = new Intent(this, NotificationReceiver.class);
+        receiverIntent.putExtra("title", edit_title.getText().toString());
+        receiverIntent.putExtra("detail", edit_detail.getText().toString());
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 123, receiverIntent, PendingIntent.FLAG_IMMUTABLE);
+
+        //등록한 알람날짜 포맷을 밀리초로 변경한기 위한 코드
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        LocalDate now = LocalDate.now(); //현재시간 구하기
+        Date datetime = null;
+
+        try {
+            datetime = dateFormat.parse(now + " " + alarmTimeValue);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        //date타입으로 변경된 알람시간을 캘린더 타임에 등록
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(datetime);
+
+        //알람시간 설정
+        //param 1)알람의 타입
+        //param 2)알람이 울려야 하는 시간(밀리초)을 나타낸다.
+        //param 3)알람이 울릴 때 수행할 작업을 나타냄
+        alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+    }
 }
