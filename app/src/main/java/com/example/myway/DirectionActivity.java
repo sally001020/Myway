@@ -23,6 +23,7 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map.Entry;
 import android.content.Context;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,7 +58,7 @@ public class DirectionActivity extends AppCompatActivity {
 
 
         TextView tText =(TextView) findViewById(R.id.timeView2);
-        //출퇴근시간 6-8/17-19시 사이면->혼잡 이외면 여유 반환.. 추후 세분화 예정
+        //출퇴근시간 6-8/17-19시 사이면->혼잡 이외면 여유 반환
         if (((Timeset4>=6)&&(Timeset4<=8))||((Timeset4>=17)&&(Timeset4<=19))) {
             tText.setText("혼잡");
             isJam = "True";
@@ -79,6 +80,7 @@ public class DirectionActivity extends AppCompatActivity {
         textView.setText("오늘 " +simpleDateFormat1.format(now)+" "+simpleDateFormat.format(now) + " 출발");
 
 
+        ImageView greenImg = (ImageView) findViewById(R.id.grenImg);
 
         //출발역 text 지정 추후 Edittext -> TextView로 변경 예정
         String[] ss = intent.getStringArrayExtra("Sstation");
@@ -118,8 +120,6 @@ public class DirectionActivity extends AppCompatActivity {
         ////////////////////지하철 맵 생성
         HashMap<String, HashSet<String>> transferMap= new HashMap<String, HashSet<String>>();
 
-        String fileName = "mywaydata.txt";
-
         //출발역, 도착역 지정 - toString() 하지 않을시 오류 발생
         String depart = Depart_station.toString();
         String arrival = Arrival_station.toString();
@@ -131,6 +131,8 @@ public class DirectionActivity extends AppCompatActivity {
             if(isJam == "True"){ //혼잡할시
                 Log.d("혼잡","혼잡 맞음");
                 InputStream is = getResources().openRawResource(R.raw.congest);
+                greenImg.setImageResource(R.drawable.reduser);
+
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(is));
                 String s;
@@ -224,14 +226,16 @@ public class DirectionActivity extends AppCompatActivity {
 
                 System.out.println(Arrays.toString(stData));
 
+                TextView stTest = (TextView) findViewById(R.id.stations_view);
 
+                stTest.setText(Arrays.toString(stData).replaceAll(",","\n"));
 
 
 
             }else if(isJam == "False"){ //여유일시
                 Log.d("혼잡아님", "혼잡아님");
                 InputStream is = getResources().openRawResource(R.raw.data);
-
+                greenImg.setImageResource(R.drawable.greenuser);
                 BufferedReader in = new BufferedReader(new InputStreamReader(is));
                 String s;
                 boolean edgeOrVertex = true;
