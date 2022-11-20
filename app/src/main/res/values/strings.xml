@@ -9,7 +9,7 @@
     <string name="user_default_name">로그인</string>
     <string name="find_road">길찾기</string>
     <string name="train_road">지하철 노선도</string>
-    <string name="search_location">역 정보 검색 </string>
+    <string name="search_location">역 도착정보 검색</string>
     <string name="restapi_key">KakaoAK ad5b641de9a2021aea67b77f44006727</string>
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
