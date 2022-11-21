@@ -84,13 +84,6 @@ public class UserListPlusActivity extends AppCompatActivity {
                             mUserArrayList.add(userDate);
                             mListAdapter.notifyItemInserted(mUserArrayList.size() -1);
 
-                            mListAdapter.setOnItemClickListener(new UserListAdapter.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(View v, int position) {
-                                    String name = mUserArrayList.get(position).getUserName();
-                                    Toast.makeText(UserListPlusActivity.this, name + " was clicked!", Toast.LENGTH_SHORT).show();
-                                }
-                            });
 
 
 

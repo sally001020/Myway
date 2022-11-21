@@ -85,12 +85,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
                 Log.d("demo","onClick : item clicked"+getItemId());
             });
 
-            itemView.findViewById(R.id.deleteButton).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Log.d("demo","onclick: Like for userList"+userEmail);
-                }
-            });
         }
 
 
