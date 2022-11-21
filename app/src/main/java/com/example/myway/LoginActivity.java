@@ -95,22 +95,27 @@ public class LoginActivity extends AppCompatActivity {
                                 } else {
                                     Log.i("로그인 Name 데이터 있음",userName);
                                 }
-                                SharedPreferences sharedPreferences = getSharedPreferences("sharedPreferences", Activity.MODE_PRIVATE);
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putString("userEmail",userEmail);
-                                editor.putString("userPassword",userPassword);
-                                editor.putString("userName",userName);
-                                editor.commit();
+                                if (userEmail.equals("admin@naver.com")) {
+                                    Intent intent = new Intent(getApplicationContext(),UserListActivity.class);
+                                    startActivity(intent);
+                                }  else {
+                                    SharedPreferences sharedPreferences = getSharedPreferences("sharedPreferences", Activity.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putString("userEmail",userEmail);
+                                    editor.putString("userPassword",userPassword);
+                                    editor.putString("userName",userName);
+                                    editor.commit();
 
-                                SharedPreferences sharedPreferences03 = getSharedPreferences("sharedPreferences03", Activity.MODE_PRIVATE);
-                                SharedPreferences.Editor editor03 = sharedPreferences03.edit();
-                                editor03.putString("userName",userName);
-                                editor03.commit();
-                                Toast.makeText(getApplicationContext(), userName+"님 환영합니다", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                startActivity(intent);
+                                    SharedPreferences sharedPreferences03 = getSharedPreferences("sharedPreferences03", Activity.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor03 = sharedPreferences03.edit();
+                                    editor03.putString("userName",userName);
+                                    editor03.commit();
+                                    Toast.makeText(getApplicationContext(), userName+"님 환영합니다", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    startActivity(intent);
+
+                                }
                                 finish();
-
                             } else {
                                 Toast.makeText(getApplicationContext(), "로그인에 실패했습니다.", Toast.LENGTH_SHORT).show();
                                 return;

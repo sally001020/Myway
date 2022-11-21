@@ -84,21 +84,14 @@ public class UserListPlusActivity extends AppCompatActivity {
                             mUserArrayList.add(userDate);
                             mListAdapter.notifyItemInserted(mUserArrayList.size() -1);
 
-//                            Button dropBtn = (Button) findViewById(R.id.deleteButton);
-//                            dropBtn.setOnClickListener(new View.OnClickListener() {
-//                                @Override
-//                                public void onClick(View view) {
-//                                    Toast.makeText(mContext, "버튼: dropBtn 클릭" , Toast.LENGTH_SHORT).show();
-//                                    mListAdapter.setOnItemClickListener(new UserListAdapter.OnItemClickListener() {
-//                                        @Override
-//                                        public void onItemClick(View v, int position) {
-//                                            Toast.makeText(mContext, "user : " +position, Toast.LENGTH_SHORT).show();
-//                                            userDate.getUser_id();
-//                                        }
-//                                    });
-//
-//                                }
-//                            });
+                            mListAdapter.setOnItemClickListener(new UserListAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(View v, int position) {
+                                    String name = mUserArrayList.get(position).getUserName();
+                                    Toast.makeText(UserListPlusActivity.this, name + " was clicked!", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
 
 
                         } else {
